@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pruebatecnica-mario": {
+      "hosting": {
+        "pruebaTecnica": [
+          "pruebatecnica-mario"
+        ]
+      }
+    }
+  }
+}
