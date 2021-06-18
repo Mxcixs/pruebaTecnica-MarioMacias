@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Product } from 'src/app/models/product.interface';
@@ -13,7 +14,10 @@ export class ProductComponent implements OnInit {
   products: Product[] = [];
 
   private unsubscribe$ = new Subject<void>();
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getProducts();
@@ -37,6 +41,10 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(uid: string) {
     this.productService.deleteProduct(uid);
+    this.toastr.error(
+      'El producto fue eliminado con éxito',
+      'Producto eliminado'
+    );
   }
 
   changeProductStatus(product: Product) {

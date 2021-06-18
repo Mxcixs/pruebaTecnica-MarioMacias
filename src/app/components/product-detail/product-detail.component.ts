@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -17,7 +18,8 @@ export class ProductDetailComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.buildForm();
     this.productUidPath = this.route.snapshot.paramMap.get('id');
@@ -64,7 +66,10 @@ export class ProductDetailComponent implements OnInit {
       this.productService
         .updateProduct(productData)
         .then(() => {
-          console.log('Producto editado con éxito');
+          this.toastr.info(
+            'El producto fue actualizado con éxito',
+            'Producto actualizado'
+          );
           this.router.navigate(['..']);
         })
         .catch((err) => console.log(err));
@@ -73,7 +78,10 @@ export class ProductDetailComponent implements OnInit {
       this.productService
         .createProduct(productData)
         .then(() => {
-          console.log('Producto agregado con éxito');
+          this.toastr.success(
+            'El producto fue agregado con éxito',
+            'Producto agregado'
+          );
           this.router.navigate(['..']);
         })
         .catch((err) => console.log(err));
